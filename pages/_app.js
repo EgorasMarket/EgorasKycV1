@@ -1,7 +1,31 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
+
+import AppContext from '../Context/AppContext';
+import { useState } from 'react';
+import Stages from '../Context/Stages';
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  const [stage, setStage] = useState(Stages.intro);
+  const [clientInfo, setClientInfo] = useState({
+    name: 'John Doe',
+    nin: 123456789,
+  });
+  return (
+    <AppContext.Provider
+      value={{
+        state: {
+          stage: stage,
+          name: 'goodluck',
+          client: clientInfo,
+        },
+
+        change: setStage,
+        setClientInfo: setClientInfo,
+      }}
+    >
+      <Component {...pageProps} />
+    </AppContext.Provider>
+  );
 }
 
-export default MyApp
+export default MyApp;

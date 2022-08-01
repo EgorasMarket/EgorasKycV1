@@ -1,0 +1,76 @@
+.rounded {
+    transition: all;
+    background-color: var(--default_light_green_color);
+    color: var(--default_green_color);
+    width: 100%;
+    max-width: 200px;
+    padding: var(--default_padding) ;
+    border: none;
+    margin: 1rem 1rem;
+    border-radius:  var(--default_border_radius);
+
+    
+ 
+
+}
+
+
+
+
+
+.rounded:hover{
+    background-color: var(--default_green_color);
+    color: var(--default_light_color);
+    cursor: pointer;
+
+}
+
+
+
+.plain {
+    transition: all;
+    background-color: var(--default_light_color);
+    color: var(--default_green_color);
+    width: 100%;
+    max-width: 200px;
+    padding: var(--default_padding) ;
+    border-radius:  var(--default_border_radius);
+    border: 1px solid var(--default_green_color);
+    margin: 1rem 0rem;
+    padding: 1rem 1.5rem;
+
+ 
+
+}
+
+.plain:hover{
+    background-color: var(--default_green_color);
+    color: var(--default_light_color);
+    cursor: pointer;
+
+}
+
+
+
+.back {
+    display: flex;
+    width: 100px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    transition: all;
+    background-color: var(--default_light_color);
+    color: var(--default_green_color);
+    border-radius:  var(--default_border_radius);
+    border: 1px solid var(--default_green_color);
+
+ 
+
+}
+
+.back:hover{
+    background-color: var(--default_green_color);
+    color: var(--default_light_color);
+    cursor: pointer;
+
+}

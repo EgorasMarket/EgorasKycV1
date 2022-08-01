@@ -1,0 +1,27 @@
+.container {
+    transition: all;
+    background-color: var(--default_light_green_color);
+    color: var(--default_green_color);
+    width: 100%;
+    max-width: 200px;
+    padding: var(--default_padding) ;
+    border: none;
+    border-radius: 4px;
+
+}
+
+
+.container:hover{
+    background-color: var(--default_green_color);
+    color: var(--default_light_color);
+    cursor: pointer;
+
+}
+
+.button_group{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+    padding: 1rem 0rem;
+}
