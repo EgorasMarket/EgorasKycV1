@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 
 import AppContext from '../Context/AppContext';
-import Stages from '../Context/Stages';
+import { Stages } from '../Context/StagesConfig';
+
 import ButtonTypes from '../Helpers/ButtonTypes';
 import CustomButtons from './CustomButtons';
 

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import { useContext } from 'react';
 import AppContext from '../Context/AppContext';
-import Stages from '../Context/Stages';
+import { Stages } from '../Context/StagesConfig';
 import dynamic from 'next/dynamic';
 
 export default function Home() {
@@ -17,6 +17,8 @@ export default function Home() {
     import('../components/SelectDocument')
   );
   const FrontId = dynamic(() => import('../components/FrontId'));
+  const BackID = dynamic(() => import('../components/BackId'));
+  const Selfie = dynamic(() => import('../components/Selfie'));
 
   //destructure the context variables
 
@@ -33,9 +35,11 @@ export default function Home() {
       {stage && stage === Stages.frontID && (
         <FrontId stage={Stages.frontID} />
       )}
-
       {stage && stage === Stages.backID && (
-        <FrontId stage={Stages.backID} />
+        <BackID stage={Stages.backID} />
+      )}{' '}
+      {stage && stage === Stages.selfie && (
+        <Selfie stage={Stages.selfie} />
       )}
     </div>
   );

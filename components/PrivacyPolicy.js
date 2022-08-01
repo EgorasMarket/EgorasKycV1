@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
-import Stages from '../Context/Stages';
+import { Stages } from '../Context/StagesConfig';
+
 import styles from '../styles/Privacy.module.css';
 import CustomButtons from './CustomButtons';
 import ButtonTypes from '../Helpers/ButtonTypes';

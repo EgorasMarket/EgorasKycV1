@@ -2,13 +2,14 @@ import React, { useContext } from 'react';
 
 import AppContext from '../Context/AppContext';
 import { Stages } from '../Context/StagesConfig';
+
 import ButtonTypes from '../Helpers/ButtonTypes';
 import validateNIN from '../Helpers/validations/ValidateNIN';
 import CustomButtons from './CustomButtons';
 import TextInput from './TextInput';
 import Image from 'next/image';
 
-const FrontId = () => {
+const Selfie = () => {
   const value = useContext(AppContext);
 
   return (
@@ -16,8 +17,8 @@ const FrontId = () => {
       <CustomButtons title={'back'} type={ButtonTypes.back} />
       <div className="kyc-modal">
         <div>
-          <h1 className="title"> Provide the Front of Your ID </h1>
-          <h4>Photo must be of good quality</h4>
+          <h1 className="title"> Take a Selfie </h1>
+          <h4>Please follow the guidance below</h4>
         </div>
 
         <div>
@@ -30,11 +31,6 @@ const FrontId = () => {
           onClick={() => {
             //check if the nin passes validation
 
-            if (!validateNIN(value.state.client.nin)) {
-              alert('An error occured');
-              return;
-            }
-
             //proceed to next stage
             value.change(Stages.backID);
           }}
@@ -44,4 +40,4 @@ const FrontId = () => {
   );
 };
 
-export default FrontId;
+export default Selfie;
