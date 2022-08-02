@@ -10,12 +10,4 @@ const Stages = Object.freeze({
   selfie: 6,
 });
 
-const next = () => {
-  const stage = useContext(AppContext);
-
-  stage.change(stage.state.stage++);
-  // fetch from the context information
-
-  return stage;
-};
 export { Stages };

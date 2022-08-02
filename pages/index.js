@@ -26,18 +26,23 @@ export default function Home() {
   return (
     <div className={styles.container}>
       {stage === Stages.intro && <KycDialog stage={Stages.intro} />}
+
       {stage === Stages.termsOfService && (
         <PrivacyPolicy stage={Stages.termsOfService} />
       )}
+
       {stage && stage === Stages.inputNIN && (
         <SelectDocument stage={Stages.inputNIN} />
       )}
+
       {stage && stage === Stages.frontID && (
         <FrontId stage={Stages.frontID} />
       )}
+
       {stage && stage === Stages.backID && (
         <BackID stage={Stages.backID} />
-      )}{' '}
+      )}
+
       {stage && stage === Stages.selfie && (
         <Selfie stage={Stages.selfie} />
       )}
