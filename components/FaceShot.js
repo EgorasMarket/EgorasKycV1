@@ -130,7 +130,7 @@ const FaceShot = () => {
               Start Camera
             </button>
             <button id="click-photo" onClick={clickPhoto}>
-              Capture
+              Click Photo
             </button>
           </div>
 
@@ -138,7 +138,7 @@ const FaceShot = () => {
         </div>
 
         <CustomButtons
-          title={'finish'}
+          title={'choose'}
           type={ButtonTypes.plain}
           onClick={submitFrontImg}
         />
