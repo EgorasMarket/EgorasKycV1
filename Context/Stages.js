@@ -1,4 +1,4 @@
-import Application from '../Helpers/global';
+import Application from "../Helpers/global";
 
 const Stages = Object.freeze({
   intro: 1,
@@ -6,6 +6,7 @@ const Stages = Object.freeze({
   inputNIN: 3,
   frontID: 4,
   backID: 5,
+  faceScan: 6,
 });
 
 export default Stages;

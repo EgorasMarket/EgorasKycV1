@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import ButtonTypes from '../Helpers/ButtonTypes';
-import styles from '../styles/CustomButtons.module.css';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import React, { useContext } from "react";
+import ButtonTypes from "../Helpers/ButtonTypes";
+import styles from "../styles/CustomButtons.module.css";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
-import AppContext from '../Context/AppContext';
+import AppContext from "../Context/AppContext";
 
 const CustomButtons = ({ title, onClick, padding, type }) => {
   const value = useContext(AppContext);
@@ -11,7 +11,7 @@ const CustomButtons = ({ title, onClick, padding, type }) => {
     return (
       <div>
         <button className={styles.plain} onClick={onClick}>
-          {' '}
+          {" "}
           {title}
         </button>
       </div>
@@ -40,7 +40,7 @@ const CustomButtons = ({ title, onClick, padding, type }) => {
     return (
       <div>
         <button onClick={onClick} className={styles.container}>
-          {'plain'}
+          {"plain"}
         </button>
       </div>
     );
