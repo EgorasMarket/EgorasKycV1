@@ -17,8 +17,8 @@ export default function Home() {
     import('../components/SelectDocument')
   );
   const FrontId = dynamic(() => import('../components/FrontId'));
-  const BackID = dynamic(() => import('../components/BackId'));
-  const Selfie = dynamic(() => import('../components/Selfie'));
+  const BackId = dynamic(() => import('../components/BackId'));
+  const FaceShot = dynamic(() => import('../components/FaceShot'));
 
   //destructure the context variables
 
@@ -34,17 +34,15 @@ export default function Home() {
       {stage && stage === Stages.inputNIN && (
         <SelectDocument stage={Stages.inputNIN} />
       )}
-
       {stage && stage === Stages.frontID && (
         <FrontId stage={Stages.frontID} />
       )}
 
       {stage && stage === Stages.backID && (
-        <BackID stage={Stages.backID} />
+        <BackId stage={Stages.backID} />
       )}
-
-      {stage && stage === Stages.selfie && (
-        <Selfie stage={Stages.selfie} />
+      {stage && stage === Stages.faceScan && (
+        <FaceShot stage={Stages.faceScan} />
       )}
     </div>
   );

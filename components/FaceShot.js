@@ -1,14 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 
-<<<<<<< HEAD
-import AppContext from '../Context/AppContext';
-import { Stages } from '../Context/StagesConfig';
-import ButtonTypes from '../Helpers/ButtonTypes';
-import validateNIN from '../Helpers/validations/ValidateNIN';
-import CustomButtons from './CustomButtons';
-import TextInput from './TextInput';
-import Image from 'next/image';
-=======
 import axios from "axios";
 
 import AppContext from "../Context/AppContext";
@@ -18,22 +9,53 @@ import validateNIN from "../Helpers/validations/ValidateNIN";
 import CustomButtons from "./CustomButtons";
 import TextInput from "./TextInput";
 import Image from "next/image";
->>>>>>> 7f577b1356dc660370cfc57b194e7c8d5278ed40
 
-const FrontId = () => {
+const FaceShot = () => {
   const value = useContext(AppContext);
-  const [imgurl, setImgurl] = useState("/image.jpeg");
+  const videoRef = useRef(null);
+  const [imgurl, setImgurl] = useState("/face-detection.png");
+
+  let camera_button = document.querySelector("#start-camera");
+  let video = document.getElementById("video");
+  let click_button = document.querySelector("#click-photo");
+  let canvas = document.getElementById("canvas");
+  startCam;
+
+  const startCam = async (event) => {
+    // let stream = await navigator.mediaDevices.getUserMedia({
+    //   video: true,
+    //   audio: false,
+    // });
+    // video.srcObject = stream;
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoRef.current.srcObject = stream;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const clickPhoto = async (event) => {
+    canvas
+      .getContext("2d")
+      .drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+    let image_data_url = canvas.toDataURL("image/jpeg");
+
+    // data url of the image
+    console.log(image_data_url);
+  };
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       const types = ["jpg", "png", "jpeg"];
 
-      if (event.currentTarget.id === "frontImg") {
+      if (event.currentTarget.id === "backImg") {
         if (event.currentTarget.files.length === 0) {
           // setUserInfo({ ...userInfo, applicantImg: "" });
           // document.getElementById("output1").src = "";
         } else {
-          let productFile = document.getElementById("frontImg").files[0];
+          let productFile = document.getElementById("backImg").files[0];
 
           let fileExtension = productFile.name.split(".").pop();
           console.log(productFile);
@@ -57,13 +79,13 @@ const FrontId = () => {
 
     const formData = new FormData();
 
-    let checkImg1 = document.getElementById("frontImg").files.length;
+    let checkImg1 = document.getElementById("backImg").files.length;
 
     if (checkImg1 == 1) {
       console.log("okkkk");
-      const element = document.getElementById("frontImg");
+      const element = document.getElementById("backImg");
       const file = element.files[0];
-      formData.append("frontImg", file);
+      formData.append("backImg", file);
       //console.log(formData, "hhhh");
       try {
         const res = await axios.post(
@@ -90,26 +112,20 @@ const FrontId = () => {
       <CustomButtons title={"back"} type={ButtonTypes.back} />
       <div className="kyc-modal">
         <div>
-          <h1 className="title"> Provide the Front of Your ID ss</h1>
+          <h1 className="title"> Provide the Back of Your ID</h1>
           <h4>Photo must be of good quality</h4>
         </div>
 
         <div>
-          <label
-            for="frontImg"
-            className="custom-file-upload33b"
-            onChange={onImageChange}
-          >
-            <Image src={imgurl} width={200} height={100} />
-          </label>
-          <input
-            type="file"
-            id="frontImg"
-            name="frontImg"
-            style={{ display: "none" }}
-            onChange={onImageChange}
-            // className="d-none"
-          />
+          <button id="start-camera" onClick={startCam}>
+            Start Camera
+          </button>
+          {/* <video id="video" width="320" height="240" autoplay></video> */}
+          <video width="320" height="240" ref={videoRef} autoPlay />
+          <button id="click-photo" onClick={clickPhoto}>
+            Click Photo
+          </button>
+          <canvas id="canvas" width="320" height="240"></canvas>
         </div>
 
         <CustomButtons
@@ -133,4 +149,4 @@ const FrontId = () => {
   );
 };
 
-export default FrontId;
+export default FaceShot;
