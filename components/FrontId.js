@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 
-<<<<<<< HEAD
+import axios from 'axios';
+
 import AppContext from '../Context/AppContext';
 import { Stages } from '../Context/StagesConfig';
 import ButtonTypes from '../Helpers/ButtonTypes';
@@ -8,34 +9,26 @@ import validateNIN from '../Helpers/validations/ValidateNIN';
 import CustomButtons from './CustomButtons';
 import TextInput from './TextInput';
 import Image from 'next/image';
-=======
-import axios from "axios";
-
-import AppContext from "../Context/AppContext";
-import Stages from "../Context/Stages";
-import ButtonTypes from "../Helpers/ButtonTypes";
-import validateNIN from "../Helpers/validations/ValidateNIN";
-import CustomButtons from "./CustomButtons";
-import TextInput from "./TextInput";
-import Image from "next/image";
->>>>>>> 7f577b1356dc660370cfc57b194e7c8d5278ed40
+import { API_URL } from '../Helpers/types';
 
 const FrontId = () => {
   const value = useContext(AppContext);
-  const [imgurl, setImgurl] = useState("/image.jpeg");
+  const defaultImage = '/image.jpeg';
+  const [imgurl, setImgurl] = useState(defaultImage);
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
-      const types = ["jpg", "png", "jpeg"];
+      const types = ['jpg', 'png', 'jpeg'];
 
-      if (event.currentTarget.id === "frontImg") {
+      if (event.currentTarget.id === 'frontImg') {
         if (event.currentTarget.files.length === 0) {
           // setUserInfo({ ...userInfo, applicantImg: "" });
           // document.getElementById("output1").src = "";
         } else {
-          let productFile = document.getElementById("frontImg").files[0];
+          let productFile =
+            document.getElementById('frontImg').files[0];
 
-          let fileExtension = productFile.name.split(".").pop();
+          let fileExtension = productFile.name.split('.').pop();
           console.log(productFile);
 
           if (!types.includes(fileExtension)) {
@@ -57,40 +50,43 @@ const FrontId = () => {
 
     const formData = new FormData();
 
-    let checkImg1 = document.getElementById("frontImg").files.length;
+    let checkImg1 = document.getElementById('frontImg').files.length;
 
     if (checkImg1 == 1) {
-      console.log("okkkk");
-      const element = document.getElementById("frontImg");
+      console.log('okkkk');
+      const element = document.getElementById('frontImg');
       const file = element.files[0];
-      formData.append("frontImg", file);
+      formData.append('frontImg', file);
       //console.log(formData, "hhhh");
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/kyc/submit/nin/front/slip/0x5dc86878f19E45dE95180E303B8Ff00792D4C4c8",
+          API_URL +
+            '/api/kyc/submit/nin/front/slip/0x1eD8d75fbAb7Dc60d708c69fE0743396467a86F4',
           formData
         );
-        console.log(res.data, "undefined");
+        console.log(res.data, 'undefined');
         if (res.data.statusCode === 200) {
-          console.log(res.data, "successsssss");
+          console.log(res.data, 'successsssss');
           value.change(Stages.backID);
         } else {
-          console.log(res.data, "errrrrorrrrr");
+          console.log(res.data, 'errrrrorrrrr');
         }
       } catch (err) {
-        console.log(err);
+        if (err.response.data.statusCode === 500) {
+          alert('An error occured');
+        }
       }
     } else {
-      console.log("empty Product image");
+      console.log('empty Product image');
     }
   };
 
   return (
     <div className="container">
-      <CustomButtons title={"back"} type={ButtonTypes.back} />
+      <CustomButtons title={'back'} type={ButtonTypes.back} />
       <div className="kyc-modal">
         <div>
-          <h1 className="title"> Provide the Front of Your ID ss</h1>
+          <h1 className="title"> Provide the Front of Your ID</h1>
           <h4>Photo must be of good quality</h4>
         </div>
 
@@ -106,26 +102,15 @@ const FrontId = () => {
             type="file"
             id="frontImg"
             name="frontImg"
-            style={{ display: "none" }}
+            style={{ display: 'none' }}
             onChange={onImageChange}
             // className="d-none"
           />
         </div>
 
         <CustomButtons
-          title={"choose"}
+          title={imgurl === defaultImage ? 'choose' : 'next'}
           type={ButtonTypes.plain}
-          // onClick={() => {
-          //   //check if the nin passes validation
-
-          //   if (!validateNIN(value.state.client.nin)) {
-          //     alert("An error occured");
-          //     return;
-          //   }
-
-          //   //proceed to next stage
-          //   value.change(Stages.backID);
-          // }}
           onClick={submitFrontImg}
         />
       </div>

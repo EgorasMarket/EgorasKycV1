@@ -3,16 +3,18 @@ import React, { useContext, useState } from 'react';
 import axios from 'axios';
 
 import AppContext from '../Context/AppContext';
-import Stages from '../Context/Stages';
+import { Stages } from '../Context/StagesConfig';
 import ButtonTypes from '../Helpers/ButtonTypes';
 import validateNIN from '../Helpers/validations/ValidateNIN';
 import CustomButtons from './CustomButtons';
 import TextInput from './TextInput';
 import Image from 'next/image';
+import { API_URL } from '../Helpers/types';
 
 const BackId = () => {
   const value = useContext(AppContext);
-  const [imgurl, setImgurl] = useState('/image.jpeg');
+  const defaultImage = '/image.jpeg';
+  const [imgurl, setImgurl] = useState(defaultImage);
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -58,7 +60,8 @@ const BackId = () => {
       //console.log(formData, "hhhh");
       try {
         const res = await axios.post(
-          'http://localhost:5000/api/kyc/submit/nin/front/slip/0x5dc86878f19E45dE95180E303B8Ff00792D4C4c8',
+          API_URL +
+            '/api/kyc/submit/nin/front/slip/0x1eD8d75fbAb7Dc60d708c69fE0743396467a86F4',
           formData
         );
         console.log(res.data, 'undefined');
@@ -99,24 +102,12 @@ const BackId = () => {
             name="backImg"
             style={{ display: 'none' }}
             onChange={onImageChange}
-            // className="d-none"
           />
         </div>
 
         <CustomButtons
-          title={'choose'}
+          title={imgurl === defaultImage ? 'choose' : 'next'}
           type={ButtonTypes.plain}
-          // onClick={() => {
-          //   //check if the nin passes validation
-
-          //   if (!validateNIN(value.state.client.nin)) {
-          //     alert("An error occured");
-          //     return;
-          //   }
-
-          //   //proceed to next stage
-          //   value.change(Stages.backID);
-          // }}
           onClick={submitFrontImg}
         />
       </div>

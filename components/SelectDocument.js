@@ -1,30 +1,21 @@
-import React, { useContext, useCallback, useState } from "react";
+import React, { useContext, useCallback, useState } from 'react';
 
-<<<<<<< HEAD
+import axios from 'axios';
+
 import AppContext from '../Context/AppContext';
 import { Stages } from '../Context/StagesConfig';
-
 import ButtonTypes from '../Helpers/ButtonTypes';
 import validateNIN from '../Helpers/validations/ValidateNIN';
 import CustomButtons from './CustomButtons';
 import TextInput from './TextInput';
-=======
-import axios from "axios";
-
-import AppContext from "../Context/AppContext";
-import Stages from "../Context/Stages";
-import ButtonTypes from "../Helpers/ButtonTypes";
-import validateNIN from "../Helpers/validations/ValidateNIN";
-import CustomButtons from "./CustomButtons";
-import TextInput from "./TextInput";
->>>>>>> 7f577b1356dc660370cfc57b194e7c8d5278ed40
+import { API_URL } from '../Helpers/types';
 
 const SelectDocument = () => {
   const value = useContext(AppContext);
-  const [ninData, setNinData] = useState("");
+  const [ninData, setNinData] = useState('');
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
@@ -34,6 +25,9 @@ const SelectDocument = () => {
   }, []);
 
   const sendNin = async (e) => {
+    if (!validateNIN(ninData)) {
+      return;
+    }
     console.log(ninData);
     // if (!validateNIN(value.state.client.nin)) {
     //   alert("An error occured");
@@ -48,11 +42,12 @@ const SelectDocument = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/kyc/submit/nin/number/0x5dc86878f19E45dE95180E303B8Ff00792D4C4c8",
+        API_URL +
+          '/api/kyc/submit/nin/number/0x1eD8d75fbAb7Dc60d708c69fE0743396467a86F4',
         postData,
         config
       );
-      console.log(res.data, "undefined");
+      console.log(res.data, 'undefined');
       if (res.data.statusCode === 200) {
         console.log(res.data);
         value.change(Stages.frontID);
@@ -66,29 +61,29 @@ const SelectDocument = () => {
 
   return (
     <div className="container">
-      <CustomButtons title={"back"} type={ButtonTypes.back} />
+      <CustomButtons title={'back'} type={ButtonTypes.back} />
       <div className="kyc-modal">
         <div className="title">
           <h1> Enter NIN number to begin </h1>
         </div>
 
-        <TextInput title={"Enter NIN "} parentCallback={callback} />
+        <TextInput
+          title={'Enter NIN '}
+          parentCallback={callback}
+          data={ninData}
+          error={!validateNIN(ninData)}
+          onChange={(e) => {
+            if (e.target.value.length <= 11) {
+              setNinData(e.target.value);
+            }
+          }}
+        />
 
         <CustomButtons
-          title={"start"}
+          title={'start'}
           type={ButtonTypes.plain}
-          // onClick={() => {
-          //   //check if the nin passes validation
-
-          //   if (!validateNIN(value.state.client.nin)) {
-          //     alert("An error occured");
-          //     return;
-          //   }
-
-          //   //proceed to next stage
-          //   value.change(Stages.frontID);
-          // }}
           onClick={sendNin}
+          disabled={!validateNIN(ninData)}
         />
       </div>
     </div>

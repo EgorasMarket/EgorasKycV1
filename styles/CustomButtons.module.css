@@ -14,7 +14,22 @@
 
 }
 
+.rounded:disabled{
+    transition: all;
+    background-color: red; 
+    color: red;
+    width: 100%;
+    max-width: 200px;
+    padding: var(--default_padding) ;
+    border: none;
+    margin: 1rem 1rem;
+    border-radius:  var(--default_border_radius);
+}
 
+.rounded:disabled:hover{
+    background-color: red; 
+    color: red;
+}
 
 
 
@@ -42,6 +57,29 @@
  
 
 }
+
+.plain:disabled{
+    transition: all;
+    background-color:    var(--default_light_color);
+    
+    color: rgb(128, 121, 121);
+    width: 100%;
+    max-width: 200px;
+    padding: var(--default_padding) ;
+    border: 1px solid rgb(128, 121, 121);;
+
+    margin: 1rem 1rem;
+    border-radius:  var(--default_border_radius);
+}
+
+.plain:disabled:hover{
+    background-color: #fff; 
+    color: rgb(178, 173, 173);
+    border: 1px solid #eee;
+
+}
+
+
 
 .plain:hover{
     background-color: var(--default_green_color);
