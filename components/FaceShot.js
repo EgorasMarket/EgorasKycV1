@@ -34,12 +34,6 @@ const FaceShot = () => {
   startCam;
 
   const startCam = async (event) => {
-    // let stream = await navigator.mediaDevices.getUserMedia({
-    //   video: true,
-    //   audio: false,
-    // });
-    // video.srcObject = stream;
-
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
