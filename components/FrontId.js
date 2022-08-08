@@ -10,12 +10,19 @@ import CustomButtons from './CustomButtons';
 import TextInput from './TextInput';
 import Image from 'next/image';
 import { API_URL } from '../Helpers/types';
+import ProcessingDialog from './ProcessingDialog';
 
 const FrontId = () => {
   const value = useContext(AppContext);
   const defaultImage = '/image.jpeg';
   const [imgurl, setImgurl] = useState(defaultImage);
+  const [message, setMessage] = useState('');
 
+  const { toggleProcessing, closeDialog } = value;
+
+  // const closeDialog = () => {
+  //   value.setProcessing(false);
+  // };
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       const types = ['jpg', 'png', 'jpeg'];
@@ -53,6 +60,9 @@ const FrontId = () => {
     let checkImg1 = document.getElementById('frontImg').files.length;
 
     if (checkImg1 == 1) {
+      // toggleDialog();
+      toggleProcessing();
+
       console.log('okkkk');
       const element = document.getElementById('frontImg');
       const file = element.files[0];
@@ -68,16 +78,18 @@ const FrontId = () => {
         if (res.data.statusCode === 200) {
           console.log(res.data, 'successsssss');
           value.change(Stages.backID);
+          closeDialog();
         } else {
-          console.log(res.data, 'errrrrorrrrr');
+          console.log(res.data, 'error');
         }
       } catch (err) {
         if (err.response.data.statusCode === 500) {
-          alert('An error occured');
+          closeDialog();
         }
       }
     } else {
-      console.log('empty Product image');
+      console.log(message);
+      toggleProcessing();
     }
   };
 
@@ -92,11 +104,11 @@ const FrontId = () => {
 
         <div>
           <label
-            for="frontImg"
+            htmlFor="frontImg"
             className="custom-file-upload33b"
             onChange={onImageChange}
           >
-            <Image src={imgurl} width={200} height={100} />
+            <Image src={imgurl} alt="" width={200} height={100} />
           </label>
           <input
             type="file"
@@ -113,6 +125,8 @@ const FrontId = () => {
           type={ButtonTypes.plain}
           onClick={submitFrontImg}
         />
+
+        <ProcessingDialog message={message} />
       </div>
     </div>
   );

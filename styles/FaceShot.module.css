@@ -1,0 +1,15 @@
+
+
+.video{
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+}
+
+.button_group{
+
+    display: flex;
+    flex-direction: row  ;
+    justify-content: center;
+    align-items: center;
+}

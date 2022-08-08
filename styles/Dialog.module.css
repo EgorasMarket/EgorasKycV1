@@ -1,0 +1,12 @@
+.heading{
+    padding: 2rem 1rem;
+    font-weight: 500;
+}
+
+.container{
+
+    max-width: 200px;
+    height: 100px;
+
+    background-color: #eee;
+}

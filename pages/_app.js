@@ -10,6 +10,9 @@ function MyApp({ Component, pageProps }) {
     name: 'John Doe',
     nin: 123456789,
   });
+
+  const [open, setOpen] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   return (
     <AppContext.Provider
       value={{
@@ -17,10 +20,27 @@ function MyApp({ Component, pageProps }) {
           stage: stage,
           name: 'goodluck',
           client: clientInfo,
+          processing: open,
+          confirmation: confirm,
         },
 
         change: setStage,
         setClientInfo: setClientInfo,
+        setProcessing: setOpen,
+        toggleProcessing: () => {
+          setOpen(!open);
+        },
+        closeDialog: () => {
+          setOpen(false);
+        },
+
+        setConfirm: setConfirm,
+        toggleConfirm: () => {
+          setConfirm(!confirm);
+        },
+        closeDialog: () => {
+          setConfirm(false);
+        },
       }}
     >
       <Component {...pageProps} />

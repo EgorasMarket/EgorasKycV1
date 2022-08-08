@@ -22,7 +22,12 @@ const Selfie = () => {
         </div>
 
         <div>
-          <Image src={'/image.jpeg'} width={200} height={100} />
+          <Image
+            src={'/image.jpeg'}
+            alt=""
+            width={200}
+            height={100}
+          />
         </div>
 
         <CustomButtons

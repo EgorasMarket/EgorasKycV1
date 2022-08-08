@@ -10,11 +10,13 @@ import CustomButtons from './CustomButtons';
 import TextInput from './TextInput';
 import Image from 'next/image';
 import { API_URL } from '../Helpers/types';
+import ProcessingDialog from './ProcessingDialog';
 
 const BackId = () => {
   const value = useContext(AppContext);
   const defaultImage = '/image.jpeg';
   const [imgurl, setImgurl] = useState(defaultImage);
+  const { toggleProcessing, closeDialog } = value;
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -48,6 +50,8 @@ const BackId = () => {
   const submitFrontImg = async (e) => {
     e.preventDefault();
 
+    toggleProcessing();
+
     const formData = new FormData();
 
     let checkImg1 = document.getElementById('backImg').files.length;
@@ -66,6 +70,8 @@ const BackId = () => {
         );
         console.log(res.data, 'undefined');
         if (res.data.statusCode === 200) {
+          closeDialog();
+
           console.log(res.data, 'successsssss');
           value.change(Stages.faceScan);
         } else {
@@ -75,6 +81,8 @@ const BackId = () => {
         console.log(err);
       }
     } else {
+      closeDialog();
+
       console.log('empty Product image');
     }
   };
@@ -90,11 +98,11 @@ const BackId = () => {
 
         <div>
           <label
-            for="backImg"
+            htmlFor="backImg"
             className="custom-file-upload33b"
             onChange={onImageChange}
           >
-            <Image src={imgurl} width={200} height={100} />
+            <Image src={imgurl} alt="" width={200} height={100} />
           </label>
           <input
             type="file"
@@ -110,6 +118,8 @@ const BackId = () => {
           type={ButtonTypes.plain}
           onClick={submitFrontImg}
         />
+
+        <ProcessingDialog />
       </div>
     </div>
   );
