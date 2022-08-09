@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import AppContext from '../Context/AppContext';
 import { Stages } from '../Context/StagesConfig';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
 export default function Home() {
   const value = useContext(AppContext);

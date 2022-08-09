@@ -4,6 +4,8 @@ import styles from '../styles/CustomButtons.module.css';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 
 import AppContext from '../Context/AppContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const CustomButtons = ({
   title,
@@ -11,6 +13,7 @@ const CustomButtons = ({
   padding,
   type,
   disabled,
+  loading,
 }) => {
   const value = useContext(AppContext);
   if (type == ButtonTypes.plain) {
@@ -22,6 +25,7 @@ const CustomButtons = ({
           disabled={disabled}
         >
           {title}
+          {loading && <FontAwesomeIcon icon={faSpinner} spin />}
         </button>
       </div>
     );

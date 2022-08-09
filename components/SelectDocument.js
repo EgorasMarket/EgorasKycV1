@@ -13,6 +13,10 @@ import { API_URL } from '../Helpers/types';
 const SelectDocument = () => {
   const value = useContext(AppContext);
   const [ninData, setNinData] = useState('');
+  const [loading, setIsloading] = useState(false);
+  const [placeholder, setPlaceHolder] = useState('start');
+  const [disabled, setDisabled] = useState(false);
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -28,6 +32,7 @@ const SelectDocument = () => {
     if (!validateNIN(ninData)) {
       return;
     }
+
     console.log(ninData);
     // if (!validateNIN(value.state.client.nin)) {
     //   alert("An error occured");
@@ -41,6 +46,9 @@ const SelectDocument = () => {
     console.log(postData);
 
     try {
+      setIsloading(!loading);
+      setPlaceHolder('processing');
+
       const res = await axios.post(
         API_URL +
           '/api/kyc/submit/nin/number/0x1eD8d75fbAb7Dc60d708c69fE0743396467a86F4',
@@ -49,12 +57,16 @@ const SelectDocument = () => {
       );
       console.log(res.data, 'undefined');
       if (res.data.statusCode === 200) {
+        setIsloading(false);
         console.log(res.data);
         value.change(Stages.frontID);
       } else {
+        setPlaceHolder('retry');
         console.log(res.data);
       }
     } catch (err) {
+      setIsloading(false);
+      setPlaceHolder('retry');
       console.log(err.response);
     }
   };
@@ -80,9 +92,10 @@ const SelectDocument = () => {
         />
 
         <CustomButtons
-          title={'start'}
+          title={placeholder}
           type={ButtonTypes.plain}
           onClick={sendNin}
+          loading={loading}
           disabled={!validateNIN(ninData)}
         />
       </div>
