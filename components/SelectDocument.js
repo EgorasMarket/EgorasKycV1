@@ -14,8 +14,8 @@ const SelectDocument = () => {
   const value = useContext(AppContext);
   const [ninData, setNinData] = useState('');
   const [loading, setIsloading] = useState(false);
-  const [placeholder, setPlaceHolder] = useState('start');
-  const [disabled, setDisabled] = useState(false);
+  const [placeholder, setPlaceHolder] = useState('proceed');
+  const [disabled, setDisabled] = useState(!validateNIN(ninData));
 
   const config = {
     headers: {
@@ -48,6 +48,7 @@ const SelectDocument = () => {
     try {
       setIsloading(!loading);
       setPlaceHolder('processing');
+      setDisabled(true);
 
       const res = await axios.post(
         API_URL +
@@ -58,14 +59,18 @@ const SelectDocument = () => {
       console.log(res.data, 'undefined');
       if (res.data.statusCode === 200) {
         setIsloading(false);
+        setDisabled(!disabled);
+        setPlaceHolder('done');
         console.log(res.data);
         value.change(Stages.frontID);
       } else {
         setPlaceHolder('retry');
+        setDisabled(!disabled);
         console.log(res.data);
       }
     } catch (err) {
       setIsloading(false);
+      setDisabled(false);
       setPlaceHolder('retry');
       console.log(err.response);
     }
@@ -77,6 +82,7 @@ const SelectDocument = () => {
       <div className="kyc-modal">
         <div className="title">
           <h1> Enter NIN number to begin </h1>
+          <p>NIN numbers are usually 11 digits long</p>
         </div>
 
         <TextInput
@@ -88,6 +94,7 @@ const SelectDocument = () => {
             if (e.target.value.length <= 11) {
               setNinData(e.target.value);
             }
+            setDisabled(false);
           }}
         />
 
@@ -96,7 +103,7 @@ const SelectDocument = () => {
           type={ButtonTypes.plain}
           onClick={sendNin}
           loading={loading}
-          disabled={!validateNIN(ninData)}
+          disabled={disabled}
         />
       </div>
     </div>

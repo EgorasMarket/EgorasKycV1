@@ -6,6 +6,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import AppContext from '../Context/AppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { useAppContext } from '../Context/DataProvider';
 
 const CustomButtons = ({
   title,
@@ -15,7 +16,7 @@ const CustomButtons = ({
   disabled,
   loading,
 }) => {
-  const value = useContext(AppContext);
+  const value = useAppContext();
   if (type == ButtonTypes.plain) {
     return (
       <div>

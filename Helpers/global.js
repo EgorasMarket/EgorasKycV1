@@ -6,4 +6,9 @@ const Application = {
   },
 };
 
+export const config = {
+  contentType: 'application/json',
+  Accept: 'application/json',
+};
+
 export default Application;

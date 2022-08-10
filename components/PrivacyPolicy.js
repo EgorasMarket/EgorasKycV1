@@ -6,9 +6,10 @@ import styles from '../styles/Privacy.module.css';
 import CustomButtons from './CustomButtons';
 import ButtonTypes from '../Helpers/ButtonTypes';
 import AppContext from '../Context/AppContext';
+import { useAppContext } from '../Context/DataProvider';
 
 const PrivacyPolicy = () => {
-  const value = useContext(AppContext);
+  const value = useAppContext();
 
   return (
     <div className="container">
@@ -21,8 +22,8 @@ const PrivacyPolicy = () => {
 
             <p>
               By clicking Accept or continuing to use this service,
-              you agree you read, understand and accept ComplyCube
-              Privacy Policy & Terms of Service.
+              you agree you read, understand and accept Egoras
+              Technologies Terms Of Service
             </p>
 
             <p>
@@ -32,8 +33,8 @@ const PrivacyPolicy = () => {
               use facial analysis to compare your photo in the ID
               document to the upload selfie photo or video. What
               happens if I abandon the process after clicking Accept?
-              ComplyCube wont carry out any checks unless you complete
-              the process to the end.
+              Egoras Technologies wont carry out any checks unless you
+              complete the process to the end.
             </p>
 
             <div className={styles.button_group}>

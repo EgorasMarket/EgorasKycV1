@@ -1,14 +1,19 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import AppContext from '../Context/AppContext';
 import { Stages } from '../Context/StagesConfig';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { useAppContext } from '../Context/DataProvider';
+import { API_URL } from '../Helpers/types';
+import axios from 'axios';
+import { config } from '../Helpers/global';
 
 export default function Home() {
-  const value = useContext(AppContext);
+  // const value = useContext(AppContext);
+  const value = useAppContext();
 
   const KycDialog = dynamic(() => import('../components/KycDialog'));
   const PrivacyPolicy = dynamic(() =>
@@ -23,7 +28,29 @@ export default function Home() {
 
   //destructure the context variables
 
+  // let { name, stage } = value.state;
   let { name, stage } = value.state;
+  const router = useRouter();
+  const query = router.query;
+  const address = query.id;
+  const fetchData = async () => {};
+
+  useEffect(() => {
+    async () => {
+      try {
+        const res = await axios.get(
+          `${API_URL}/api/user/validation/id/${address}`,
+          config,
+          null
+        );
+        console.log(res);
+      } catch (err) {
+        console.log(err.response);
+      }
+    };
+    // add here
+  });
+
   return (
     <div className={styles.container}>
       {stage === Stages.intro && <KycDialog stage={Stages.intro} />}
