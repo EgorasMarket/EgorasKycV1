@@ -2,16 +2,16 @@ import React, { useContext, useCallback, useState } from 'react';
 
 import axios from 'axios';
 
-import AppContext from '../Context/AppContext';
 import { Stages } from '../Context/StagesConfig';
 import ButtonTypes from '../Helpers/ButtonTypes';
 import validateNIN from '../Helpers/validations/ValidateNIN';
 import CustomButtons from './CustomButtons';
 import TextInput from './TextInput';
 import { API_URL } from '../Helpers/types';
+import { useAppContext } from '../Context/DataProvider';
 
 const SelectDocument = () => {
-  const value = useContext(AppContext);
+  const value = useAppContext();
   const [ninData, setNinData] = useState('');
   const [loading, setIsloading] = useState(false);
   const [placeholder, setPlaceHolder] = useState('proceed');
@@ -34,10 +34,6 @@ const SelectDocument = () => {
     }
 
     console.log(ninData);
-    // if (!validateNIN(value.state.client.nin)) {
-    //   alert("An error occured");
-    //   return;
-    // }
 
     const postData = JSON.stringify({
       nin_number: ninData,
@@ -51,8 +47,7 @@ const SelectDocument = () => {
       setDisabled(true);
 
       const res = await axios.post(
-        API_URL +
-          '/api/kyc/submit/nin/number/0x1eD8d75fbAb7Dc60d708c69fE0743396467a86F4',
+        API_URL + '/api/kyc/submit/nin/number/' + value.state.address,
         postData,
         config
       );

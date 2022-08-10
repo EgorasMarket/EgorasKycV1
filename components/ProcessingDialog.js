@@ -9,6 +9,7 @@ import Slide from '@mui/material/Slide';
 import AppContext from '../Context/AppContext';
 import { useContext } from 'react';
 import styles from '../styles/Dialog.module.css';
+import { useAppContext } from '../Context/DataProvider';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -17,7 +18,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function ProcessingDialog({ children, message }) {
   //   const [open, setOpen] = React.useState(false);
 
-  const value = useContext(AppContext);
+  const value = useAppContext();
   const open = value.state.processing;
 
   const handleClickOpen = ({}) => {

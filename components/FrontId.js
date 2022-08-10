@@ -11,9 +11,10 @@ import TextInput from './TextInput';
 import Image from 'next/image';
 import { API_URL } from '../Helpers/types';
 import ProcessingDialog from './ProcessingDialog';
+import { useAppContext } from '../Context/DataProvider';
 
 const FrontId = () => {
-  const value = useContext(AppContext);
+  const value = useAppContext();
   const defaultImage = '/image.jpeg';
   const [imgurl, setImgurl] = useState(defaultImage);
   const [message, setMessage] = useState('');

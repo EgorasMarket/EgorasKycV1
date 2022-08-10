@@ -35,22 +35,6 @@ export default function Home() {
   const address = query.id;
   const fetchData = async () => {};
 
-  useEffect(() => {
-    async () => {
-      try {
-        const res = await axios.get(
-          `${API_URL}/api/user/validation/id/${address}`,
-          config,
-          null
-        );
-        console.log(res);
-      } catch (err) {
-        console.log(err.response);
-      }
-    };
-    // add here
-  });
-
   return (
     <div className={styles.container}>
       {stage === Stages.intro && <KycDialog stage={Stages.intro} />}
