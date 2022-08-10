@@ -16,6 +16,7 @@ import MugShotStage from '../Helpers/MugShotStage';
 import { StartOutlined } from '@mui/icons-material';
 import ConfirmationDialog from './ConfirmationDialog';
 import { useAppContext } from '../Context/DataProvider';
+import LoadingComponent from './LoadingComponent';
 
 const FaceShot = () => {
   const value = useAppContext();
@@ -27,6 +28,7 @@ const FaceShot = () => {
   const [stage, setStage] = useState(MugShotStage.init);
 
   const [showConfirm, setShowConfirm] = useState(false);
+  const [loading, setIsLoading] = useState(false);
 
   const canvasRef = useRef(null);
   // let camera_button = document.querySelector('#start-camera');
@@ -94,15 +96,11 @@ const FaceShot = () => {
 
   const submitFaceShot = async (e) => {
     // e.preventDefault();
+    setIsLoading(true);
 
     console.log('abei');
 
     const formData = new FormData();
-
-    // if (checkImg1 == 1) {
-    //   console.log('okkkk');
-    //   // const element = document.getElementById('backImg');
-    //   // const file = element.files[0];
 
     canvasRef.current.toBlob(async (blob) => {
       formData.append('mugshot', blob, 'image.jpeg');
@@ -114,13 +112,17 @@ const FaceShot = () => {
         console.log(res.data, 'undefined');
         if (res.data.statusCode === 200) {
           console.log(res.data, 'successsssss');
+          setIsLoading(false);
+
           value.change(Stages.submitted);
           // value.change(Stages.backID);
         } else {
           console.log(res.data, 'errrrrorrrrr');
+          setIsLoading(false);
         }
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
       }
     });
   };
@@ -140,57 +142,63 @@ const FaceShot = () => {
   };
 
   return (
-    <div className="container">
-      <CustomButtons title={'back'} type={ButtonTypes.back} />
-      <div className="kyc-modal">
-        <div>
-          <h1 className="title"> Take a Selfie</h1>
-          <h4>Photo must be of good quality</h4>
-          <p>
-            Please make sure the picture is taken without another
-            person in it{' '}
-          </p>
-        </div>
+    <>
+      {loading ? (
+        <LoadingComponent message={'Processing data'} />
+      ) : (
+        <div className="container">
+          <CustomButtons title={'back'} type={ButtonTypes.back} />
+          <div className="kyc-modal">
+            <div>
+              <h1 className="title"> Take a Selfie</h1>
+              <h4>Photo must be of good quality</h4>
+              <p>
+                Please make sure the picture is taken without another
+                person in it{' '}
+              </p>
+            </div>
 
-        <div>
-          {/* <video id="video" width="320" height="240" autoplay></video> */}
-          <video
-            className={styles.video}
-            width="320"
-            height="240"
-            ref={videoRef}
-            autoPlay
-          />
+            <div>
+              {/* <video id="video" width="320" height="240" autoplay></video> */}
+              <video
+                className={styles.video}
+                width="320"
+                height="240"
+                ref={videoRef}
+                autoPlay
+              />
 
-          <div>
-            <canvas
-              ref={canvasRef}
-              id="canvas"
-              width="320"
-              height="240"
-            ></canvas>
+              <div>
+                <canvas
+                  ref={canvasRef}
+                  id="canvas"
+                  width="320"
+                  height="240"
+                ></canvas>
+              </div>
+            </div>
+
+            <div className={styles.button_group}>
+              {stage > MugShotStage.capture && (
+                <CustomButtons
+                  title={'retry'}
+                  type={ButtonTypes.plain}
+                  onClick={clickPhoto}
+                />
+              )}
+
+              <CustomButtons
+                title={action}
+                type={ButtonTypes.plain}
+                onClick={cameraAction}
+              />
+            </div>
+
+            {showConfirm && <ConfirmationDialog message={'hello'} />}
           </div>
         </div>
-
-        <div className={styles.button_group}>
-          {stage > MugShotStage.capture && (
-            <CustomButtons
-              title={'retry'}
-              type={ButtonTypes.plain}
-              onClick={clickPhoto}
-            />
-          )}
-
-          <CustomButtons
-            title={action}
-            type={ButtonTypes.plain}
-            onClick={cameraAction}
-          />
-        </div>
-
-        {showConfirm && <ConfirmationDialog message={'hello'} />}
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

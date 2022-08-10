@@ -85,12 +85,7 @@ const FrontId = () => {
         }
       } catch (err) {
         console.log(err.response);
-        if (
-          err.response.data.statusCode &&
-          err.response.data.statusCode === 500
-        ) {
-          closeDialog();
-        }
+        closeDialog();
       }
     } else {
       console.log(message);
