@@ -8,6 +8,7 @@ const Stages = Object.freeze({
   frontID: 4,
   backID: 5,
   faceScan: 6,
+  submitted: 7,
 });
 
 export { Stages };

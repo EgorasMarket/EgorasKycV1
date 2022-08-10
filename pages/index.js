@@ -25,6 +25,7 @@ export default function Home() {
   const FrontId = dynamic(() => import('../components/FrontId'));
   const BackId = dynamic(() => import('../components/BackId'));
   const FaceShot = dynamic(() => import('../components/FaceShot'));
+  const Submitted = dynamic(() => import('../components/Submitted'));
 
   //destructure the context variables
 
@@ -55,6 +56,10 @@ export default function Home() {
       )}
       {stage && stage === Stages.faceScan && (
         <FaceShot stage={Stages.faceScan} />
+      )}
+
+      {stage && stage === Stages.submitted && (
+        <Submitted stage={Stages.submitted} />
       )}
     </div>
   );

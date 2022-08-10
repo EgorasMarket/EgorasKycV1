@@ -46,6 +46,7 @@ const KycDialog = () => {
 
   const perform = async () => {
     if (!address) {
+      setExecption('Invalid request');
       return;
     }
     try {
@@ -90,8 +91,6 @@ const KycDialog = () => {
             message={info}
             onRetry={() => {
               window.location.reload();
-
-              console.log(window.location.reload);
             }}
           />
         </div>

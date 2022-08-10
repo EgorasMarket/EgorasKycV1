@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }) {
   const [confirm, setConfirm] = useState(false);
   const [address, setAddress] = useState('');
   const [id, setId] = useState('');
+  const [nin, setNin] = useState('');
   return (
     <DataProvider
       values={{
@@ -24,12 +25,14 @@ function MyApp({ Component, pageProps }) {
           processing: open,
           confirmation: confirm,
           address: address,
+          nin: nin,
         },
 
         change: setStage,
         setClientInfo: setClientInfo,
         setAddress: setAddress,
-        setId: setId,
+        setId,
+        setNin,
         setProcessing: setOpen,
         toggleProcessing: () => {
           setOpen(!open);

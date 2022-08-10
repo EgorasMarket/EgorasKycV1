@@ -11,9 +11,11 @@ import TextInput from './TextInput';
 import Image from 'next/image';
 import { API_URL } from '../Helpers/types';
 import ProcessingDialog from './ProcessingDialog';
+import { useAppContext } from '../Context/DataProvider';
 
 const BackId = () => {
-  const value = useContext(AppContext);
+  const value = useAppContext();
+  const address = value.state.address;
   const defaultImage = '/image.jpeg';
   const [imgurl, setImgurl] = useState(defaultImage);
   const { toggleProcessing, closeDialog } = value;
@@ -56,35 +58,38 @@ const BackId = () => {
 
     let checkImg1 = document.getElementById('backImg').files.length;
 
-    if (checkImg1 == 1) {
-      console.log('okkkk');
-      const element = document.getElementById('backImg');
-      const file = element.files[0];
-      formData.append('backImg', file);
-      //console.log(formData, "hhhh");
-      try {
-        const res = await axios.post(
-          API_URL +
-            '/api/kyc/submit/nin/front/slip/0x1eD8d75fbAb7Dc60d708c69fE0743396467a86F4',
-          formData
-        );
-        console.log(res.data, 'undefined');
-        if (res.data.statusCode === 200) {
-          closeDialog();
-
-          console.log(res.data, 'successsssss');
-          value.change(Stages.faceScan);
-        } else {
-          console.log(res.data, 'errrrrorrrrr');
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
+    if (!checkImg1 == 1) {
       closeDialog();
-
-      console.log('empty Product image');
     }
+    // if (checkImg1 == 1) {
+    console.log('okkkk');
+    const element = document.getElementById('backImg');
+    const file = element.files[0];
+    formData.append('backImg', file);
+    //console.log(formData, "hhhh");
+    try {
+      const res = await axios.post(
+        API_URL + '/api/kyc/submit/nin/front/slip/' + address,
+        formData
+      );
+      console.log(res.data, 'undefined');
+      if (res.data.statusCode === 200) {
+        closeDialog();
+
+        console.log(res.data, 'successsssss');
+        value.setProcessing(false);
+        value.change(Stages.faceScan);
+      } else {
+        console.log(res.data, 'errrrrorrrrr');
+      }
+    } catch (err) {
+      console.log(err);
+      closeDialog();
+    }
+    // } else {
+
+    //   console.log('empty Product image');
+    // }
   };
 
   return (
@@ -117,6 +122,7 @@ const BackId = () => {
           title={imgurl === defaultImage ? 'choose' : 'next'}
           type={ButtonTypes.plain}
           onClick={submitFrontImg}
+          disabled={imgurl === defaultImage ? true : false}
         />
 
         <ProcessingDialog />

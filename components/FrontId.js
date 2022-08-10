@@ -15,6 +15,7 @@ import { useAppContext } from '../Context/DataProvider';
 
 const FrontId = () => {
   const value = useAppContext();
+  const address = value.state.address;
   const defaultImage = '/image.jpeg';
   const [imgurl, setImgurl] = useState(defaultImage);
   const [message, setMessage] = useState('');
@@ -71,20 +72,23 @@ const FrontId = () => {
       //console.log(formData, "hhhh");
       try {
         const res = await axios.post(
-          API_URL +
-            '/api/kyc/submit/nin/front/slip/0x1eD8d75fbAb7Dc60d708c69fE0743396467a86F4',
+          API_URL + '/api/kyc/submit/nin/front/slip/' + address,
           formData
         );
         console.log(res.data, 'undefined');
         if (res.data.statusCode === 200) {
           console.log(res.data, 'successsssss');
+          value.setProcessing(false);
           value.change(Stages.backID);
-          closeDialog();
         } else {
           console.log(res.data, 'error');
         }
       } catch (err) {
-        if (err.response.data.statusCode === 500) {
+        console.log(err.response);
+        if (
+          err.response.data.statusCode &&
+          err.response.data.statusCode === 500
+        ) {
           closeDialog();
         }
       }
@@ -125,6 +129,7 @@ const FrontId = () => {
           title={imgurl === defaultImage ? 'choose' : 'next'}
           type={ButtonTypes.plain}
           onClick={submitFrontImg}
+          disabled={imgurl === defaultImage ? true : false}
         />
 
         <ProcessingDialog message={message} />

@@ -1,15 +1,13 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+
 import Slide from '@mui/material/Slide';
-import AppContext from '../Context/AppContext';
-import { useContext } from 'react';
+
 import styles from '../styles/Dialog.module.css';
 import { useAppContext } from '../Context/DataProvider';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -39,7 +37,9 @@ export default function ProcessingDialog({ children, message }) {
         aria-describedby="alert-dialog-slide-description"
       >
         <div className={styles.container}>
-          <p className={styles.heading}>{message || 'Processing'}</p>
+          {/* <p className={styles.heading}>{message || 'Processing'}</p> */}
+
+          <FontAwesomeIcon icon={faSpinner} spin />
         </div>
       </Dialog>
     </div>

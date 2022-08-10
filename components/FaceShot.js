@@ -15,9 +15,11 @@ import styles from '../styles/FaceShot.module.css';
 import MugShotStage from '../Helpers/MugShotStage';
 import { StartOutlined } from '@mui/icons-material';
 import ConfirmationDialog from './ConfirmationDialog';
+import { useAppContext } from '../Context/DataProvider';
 
 const FaceShot = () => {
-  const value = useContext(AppContext);
+  const value = useAppContext();
+  const address = value.state.address;
 
   const videoRef = useRef(null);
   const [imgurl, setImgurl] = useState('/face-detection.png');
@@ -27,10 +29,10 @@ const FaceShot = () => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const canvasRef = useRef(null);
-  let camera_button = document.querySelector('#start-camera');
-  let video = document.getElementById('video');
-  let click_button = document.querySelector('#click-photo');
-  let canvas = document.getElementById('canvas');
+  // let camera_button = document.querySelector('#start-camera');
+  // let video = document.getElementById('video');
+  // let click_button = document.querySelector('#click-photo');
+  // let canvas = document.getElementById('canvas');
   startCam;
 
   const startCam = async (event) => {
@@ -53,7 +55,9 @@ const FaceShot = () => {
     let image_data_url = canvas.toDataURL('image/jpeg');
 
     setAction('save');
-    setStage(stage + 1);
+    setStage(MugShotStage.save);
+
+    console.log(stage);
 
     // data url of the image
     console.log(image_data_url);
@@ -91,6 +95,8 @@ const FaceShot = () => {
   const submitFaceShot = async (e) => {
     // e.preventDefault();
 
+    console.log('abei');
+
     const formData = new FormData();
 
     // if (checkImg1 == 1) {
@@ -102,13 +108,13 @@ const FaceShot = () => {
       formData.append('mugshot', blob, 'image.jpeg');
       try {
         const res = await axios.post(
-          API_URL +
-            '/api/kyc/submit/nin/front/slip/0x1eD8d75fbAb7Dc60d708c69fE0743396467a86F4',
+          API_URL + '/api/kyc/submit/nin/front/slip/' + address,
           formData
         );
         console.log(res.data, 'undefined');
         if (res.data.statusCode === 200) {
           console.log(res.data, 'successsssss');
+          value.change(Stages.submitted);
           // value.change(Stages.backID);
         } else {
           console.log(res.data, 'errrrrorrrrr');
@@ -117,11 +123,6 @@ const FaceShot = () => {
         console.log(err);
       }
     });
-
-    //   //console.log(formData, "hhhh");
-    // } else {
-    //   console.log('empty Product image');
-    // }
   };
 
   const cameraAction = async () => {
@@ -134,8 +135,7 @@ const FaceShot = () => {
         break;
 
       case MugShotStage.save:
-        value.setConfirm(true);
-      // submitFaceShot();
+        submitFaceShot();
     }
   };
 

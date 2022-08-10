@@ -9,6 +9,7 @@ import Slide from '@mui/material/Slide';
 import AppContext from '../Context/AppContext';
 import { useContext } from 'react';
 import styles from '../styles/Dialog.module.css';
+import { useAppContext } from '../Context/DataProvider';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -19,24 +20,24 @@ export default function ConfirmationDialog({
   message,
   open,
 }) {
-  const [show, setShow] = React.useState(true);
+  // const [show, setShow] = React.useState(true);
   //   const [open, setOpen] = React.useState(false);
 
-  const value = useContext(AppContext);
+  const value = useAppContext();
   const confirm = value.state.confirmation;
 
   const handleClickOpen = ({}) => {
-    setShow(true);
+    value.setConfirm(true);
   };
 
   const handleClose = () => {
-    setShow(false);
+    value.setConfirm(false);
   };
 
   return (
     <div>
       <Dialog
-        open={show}
+        open={confirm}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
