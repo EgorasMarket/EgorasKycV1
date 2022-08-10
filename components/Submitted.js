@@ -14,7 +14,7 @@ export default function Submitted({}) {
   return (
     <div className={styles.container}>
       <p className={styles.header_text}>
-        Thank you for submitting your account information.{' '}
+        Thank you for submitting your account information.
       </p>
       <p>
         Our onboarding team will review your details and activate your
