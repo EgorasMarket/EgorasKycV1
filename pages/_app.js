@@ -6,6 +6,8 @@ import { Stages } from '../Context/StagesConfig';
 
 import { DataProvider } from '../Context/DataProvider';
 
+import Head from 'next/head';
+
 function MyApp({ Component, pageProps }) {
   const [stage, setStage] = useState(Stages.intro);
   const [clientInfo, setClientInfo] = useState({});
@@ -16,42 +18,47 @@ function MyApp({ Component, pageProps }) {
   const [id, setId] = useState('');
   const [nin, setNin] = useState('');
   return (
-    <DataProvider
-      values={{
-        state: {
-          stage: stage,
-          name: 'goodluck',
-          client: clientInfo,
-          processing: open,
-          confirmation: confirm,
-          address: address,
-          nin: nin,
-        },
+    <>
+      {/* <head>
+        <link rel="shortcut icon" href="/vercel.svg" />
+      </head> */}
+      <DataProvider
+        values={{
+          state: {
+            stage: stage,
+            name: 'goodluck',
+            client: clientInfo,
+            processing: open,
+            confirmation: confirm,
+            address: address,
+            nin: nin,
+          },
 
-        change: setStage,
-        setClientInfo: setClientInfo,
-        setAddress: setAddress,
-        setId,
-        setNin,
-        setProcessing: setOpen,
-        toggleProcessing: () => {
-          setOpen(!open);
-        },
-        closeDialog: () => {
-          setOpen(false);
-        },
+          change: setStage,
+          setClientInfo: setClientInfo,
+          setAddress: setAddress,
+          setId,
+          setNin,
+          setProcessing: setOpen,
+          toggleProcessing: () => {
+            setOpen(!open);
+          },
+          closeDialog: () => {
+            setOpen(false);
+          },
 
-        setConfirm: setConfirm,
-        toggleConfirm: () => {
-          setConfirm(!confirm);
-        },
-        closeDialog: () => {
-          setConfirm(false);
-        },
-      }}
-    >
-      <Component {...pageProps} />
-    </DataProvider>
+          setConfirm: setConfirm,
+          toggleConfirm: () => {
+            setConfirm(!confirm);
+          },
+          closeDialog: () => {
+            setConfirm(false);
+          },
+        }}
+      >
+        <Component {...pageProps} />
+      </DataProvider>
+    </>
   );
 }
 

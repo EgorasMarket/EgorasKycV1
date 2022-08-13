@@ -8,10 +8,11 @@ import ButtonTypes from '../Helpers/ButtonTypes';
 import { useAppContext } from '../Context/DataProvider';
 import CustomButtons from './CustomButtons';
 import axios from 'axios';
-import { API_URL } from '../Helpers/types';
+import { API_URL, ERR_NETWORK } from '../Helpers/types';
 import { config } from '../Helpers/global';
 import LoadingComponent from './LoadingComponent';
 import ErrorComponent from './ErrorComponent';
+import KycStatusTypes from '../Helpers/KycStatusTypes';
 
 const KycDialog = () => {
   const router = useRouter();
@@ -61,14 +62,30 @@ const KycDialog = () => {
         );
       }
 
+      //DESTRUCTURE STATUS
+      const status = call.data.payload.kyc_status;
+
+      if (status !== KycStatusTypes.PENDING) {
+        setExecption(' Invalid Request: Error code:5091');
+        return;
+      }
       setPayload(call.data.payload);
       value.setId(call.data.payload.id);
       value.setAddress(call.data.payload.address);
       stopLoading();
       console.log(call);
     } catch (err) {
-      setExecption(err.response.data.message);
-      console.log(err.response);
+      // check possible errors
+      if (err.code === ERR_NETWORK) {
+        setExecption(
+          'There seems to be a validation error, Please contact support. Error Code 9920.'
+        );
+        return;
+      }
+
+      if (err.response.data.message) {
+        setExecption(err.response.data.message);
+      }
     }
     // };
   };
