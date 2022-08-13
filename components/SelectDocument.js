@@ -22,7 +22,6 @@ const SelectDocument = () => {
       'Content-Type': 'application/json',
     },
   };
-
   const callback = useCallback((count) => {
     setNinData(count);
     // console.log(count);

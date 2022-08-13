@@ -23,7 +23,6 @@ const KycDialog = () => {
   const [payload, setPayload] = useState({});
   const [isError, setIsError] = useState(false);
   const [info, setError] = useState('');
-
   const stopLoading = () => {
     setIsloading(false);
   };
@@ -62,30 +61,14 @@ const KycDialog = () => {
         );
       }
 
-      //DESTRUCTURE STATUS
-      const status = call.data.payload.kyc_status;
-
-      if (status !== KycStatusTypes.PENDING) {
-        setExecption(' Invalid Request: Error code:5091');
-        return;
-      }
       setPayload(call.data.payload);
       value.setId(call.data.payload.id);
       value.setAddress(call.data.payload.address);
       stopLoading();
       console.log(call);
     } catch (err) {
-      // check possible errors
-      if (err.code === ERR_NETWORK) {
-        setExecption(
-          'There seems to be a validation error, Please contact support. Error Code 9920.'
-        );
-        return;
-      }
-
-      if (err.response.data.message) {
-        setExecption(err.response.data.message);
-      }
+      setExecption(err.response.data.message);
+      console.log(err.response);
     }
     // };
   };

@@ -1,7 +1,7 @@
 .rounded {
     transition: all;
-    background-color: var(--default_light_green_color);
-    color: var(--default_green_color);
+    background-color: var(--default_green_color);
+    color: var(--default_light_color);
     width: 100%;
     max-width: 200px;
     padding: var(--default_padding) ;
@@ -16,8 +16,8 @@
 
 .rounded:disabled{
     transition: all;
-    background-color: red; 
-    color: red;
+    background-color: #eee; 
+    color: #333;
     width: 100%;
     max-width: 200px;
     padding: var(--default_padding) ;
@@ -27,15 +27,15 @@
 }
 
 .rounded:disabled:hover{
-    background-color: red; 
-    color: red;
+    background-color: #eee; 
+    color: #333;
 }
 
 
 
 .rounded:hover{
-    background-color: var(--default_green_color);
-    color: var(--default_light_color);
+    /* background-color: var(--default_light_green_color); */
+    color: var(--default_light_green_color);
     cursor: pointer;
 
 }

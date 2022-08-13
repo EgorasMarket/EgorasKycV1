@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { API_URL } from '../Helpers/types';
 import ProcessingDialog from './ProcessingDialog';
 import { useAppContext } from '../Context/DataProvider';
+import styles from '../styles/Back.module.css';
 
 const BackId = () => {
   const value = useAppContext();
@@ -98,24 +99,28 @@ const BackId = () => {
       <div className="kyc-modal">
         <div>
           <h1 className="title"> Provide the Back of Your ID</h1>
-          <h4>Photo must be of good quality</h4>
-        </div>
 
-        <div>
-          <label
-            htmlFor="backImg"
-            className="custom-file-upload33b"
-            onChange={onImageChange}
-          >
-            <Image src={imgurl} alt="" width={200} height={100} />
-          </label>
-          <input
-            type="file"
-            id="backImg"
-            name="backImg"
-            style={{ display: 'none' }}
-            onChange={onImageChange}
-          />
+          <div className={styles.content}>
+            <h4 className={styles.description}>
+              Photo must be of good quality
+            </h4>
+            <div>
+              <label
+                htmlFor="backImg"
+                className="custom-file-upload33b"
+                onChange={onImageChange}
+              >
+                <Image src={imgurl} alt="" width={200} height={100} />
+              </label>
+              <input
+                type="file"
+                id="backImg"
+                name="backImg"
+                style={{ display: 'none' }}
+                onChange={onImageChange}
+              />
+            </div>
+          </div>
         </div>
 
         <CustomButtons

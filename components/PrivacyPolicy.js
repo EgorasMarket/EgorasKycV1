@@ -5,7 +5,6 @@ import { Stages } from '../Context/StagesConfig';
 import styles from '../styles/Privacy.module.css';
 import CustomButtons from './CustomButtons';
 import ButtonTypes from '../Helpers/ButtonTypes';
-import AppContext from '../Context/AppContext';
 import { useAppContext } from '../Context/DataProvider';
 
 const PrivacyPolicy = () => {
@@ -18,7 +17,7 @@ const PrivacyPolicy = () => {
       <div className="kyc-modal">
         <div className="content">
           <div>
-            <h1>Terms of Service </h1>
+            <h1 className={styles.title}>Terms of Service </h1>
 
             <p>
               By clicking Accept or continuing to use this service,
@@ -41,6 +40,9 @@ const PrivacyPolicy = () => {
               <CustomButtons
                 type={ButtonTypes.plain}
                 title="cancel"
+                onClick={() => {
+                  value.change(Stages.intro);
+                }}
               />
               <CustomButtons
                 type={ButtonTypes.rounded}

@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { API_URL } from '../Helpers/types';
 import ProcessingDialog from './ProcessingDialog';
 import { useAppContext } from '../Context/DataProvider';
+import styles from '../styles/Front.module.css';
 
 const FrontId = () => {
   const value = useAppContext();
@@ -21,10 +22,6 @@ const FrontId = () => {
   const [message, setMessage] = useState('');
 
   const { toggleProcessing, closeDialog } = value;
-
-  // const closeDialog = () => {
-  //   value.setProcessing(false);
-  // };
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       const types = ['jpg', 'png', 'jpeg'];
@@ -99,25 +96,28 @@ const FrontId = () => {
       <div className="kyc-modal">
         <div>
           <h1 className="title"> Provide the Front of Your ID</h1>
-          <h4>Photo must be of good quality</h4>
-        </div>
-
-        <div>
-          <label
-            htmlFor="frontImg"
-            className="custom-file-upload33b"
-            onChange={onImageChange}
-          >
-            <Image src={imgurl} alt="" width={200} height={100} />
-          </label>
-          <input
-            type="file"
-            id="frontImg"
-            name="frontImg"
-            style={{ display: 'none' }}
-            onChange={onImageChange}
-            // className="d-none"
-          />
+          <div className={styles.content}>
+            <h4 className={styles.description}>
+              Photo must be of good quality
+            </h4>
+            <div>
+              <label
+                htmlFor="frontImg"
+                className="custom-file-upload33b"
+                onChange={onImageChange}
+              >
+                <Image src={imgurl} alt="" width={200} height={100} />
+              </label>
+              <input
+                type="file"
+                id="frontImg"
+                name="frontImg"
+                style={{ display: 'none' }}
+                onChange={onImageChange}
+                // className="d-none"
+              />
+            </div>
+          </div>
         </div>
 
         <CustomButtons

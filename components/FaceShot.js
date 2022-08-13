@@ -2,18 +2,13 @@ import React, { useContext, useState, useRef } from 'react';
 
 import axios from 'axios';
 
-import AppContext from '../Context/AppContext';
 import { Stages } from '../Context/StagesConfig';
 import ButtonTypes from '../Helpers/ButtonTypes';
-import validateNIN from '../Helpers/validations/ValidateNIN';
 import CustomButtons from './CustomButtons';
-import TextInput from './TextInput';
-import Image from 'next/image';
 import { API_URL } from '../Helpers/types';
 
 import styles from '../styles/FaceShot.module.css';
 import MugShotStage from '../Helpers/MugShotStage';
-import { StartOutlined } from '@mui/icons-material';
 import ConfirmationDialog from './ConfirmationDialog';
 import { useAppContext } from '../Context/DataProvider';
 import LoadingComponent from './LoadingComponent';
@@ -151,15 +146,19 @@ const FaceShot = () => {
           <div className="kyc-modal">
             <div>
               <h1 className="title"> Take a Selfie</h1>
-              <h4>Photo must be of good quality</h4>
-              <p>
-                Please make sure the picture is taken without another
-                person in it{' '}
-              </p>
+
+              <div className={styles.content}>
+                <h4 className={styles.description}>
+                  Photo must be of good quality
+                </h4>
+                <p>
+                  Please make sure the picture is taken without
+                  another person in it{' '}
+                </p>
+              </div>
             </div>
 
-            <div>
-              {/* <video id="video" width="320" height="240" autoplay></video> */}
+            <div style={{ width: '100%' }}>
               <video
                 className={styles.video}
                 width="320"
@@ -189,7 +188,7 @@ const FaceShot = () => {
 
               <CustomButtons
                 title={action}
-                type={ButtonTypes.plain}
+                type={ButtonTypes.rounded}
                 onClick={cameraAction}
               />
             </div>

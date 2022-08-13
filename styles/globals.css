@@ -34,6 +34,8 @@ a {
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -69,7 +71,24 @@ a {
   box-shadow: 0px 0px 25px #eee;
 }
 
+
+.title{
+  width: 100%;
+  color: #333;
+  text-transform: uppercase;
+  margin: 1rem 0rem;
+}
+.content{
+  width: 100%;
+  color: #333;
+  text-transform: uppercase;
+  margin: 1rem 0rem;
+}
 .main_input{
   -webkit-appearance: none !important; 
   -moz-appearance: textfield !important; 
 }
+
+/* @media screen and (min-width: 25em){
+  html { font-size: calc( 16px + (24 - 16) * (100vw - 400px) / (800 - 400) ); }
+} */
